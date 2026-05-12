@@ -1,0 +1,8 @@
+﻿<maui:MauiWinUIApplication
+    x:Class="VIC_EVO_Dashboard.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:maui="using:Microsoft.Maui"
+    xmlns:local="using:VIC_EVO_Dashboard.WinUI">
+
+</maui:MauiWinUIApplication>

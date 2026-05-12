@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VIC_EVO_Dashboard.Pages.Components.ErrorBox"
+             x:Name="Errorline">
+
+
+    <Grid ColumnDefinitions="*, Auto" 
+       VerticalOptions="Center" 
+       Padding="0,2">
+
+        <Label Text="{Binding ErrorText, Source={x:Reference Errorline}}" 
+            TextColor="#D9FFFFFF"
+            FontSize="11" 
+            FontAttributes="Bold"
+            FontFamily="Verdana"
+            LineBreakMode="WordWrap" 
+            MaxLines="2"
+            VerticalTextAlignment="Center"
+            HorizontalOptions="StartAndExpand" 
+            Grid.Column="0"/>
+
+        <Rectangle Grid.Column="1" 
+                Fill="{Binding LedColor, Source={x:Reference Errorline}}" 
+                RadiusX="2" RadiusY="2"
+                Stroke="Black" StrokeThickness="0.5"
+                WidthRequest="25" HeightRequest="12"
+                VerticalOptions="Center"
+                Margin="10,0,0,0"/>
+    </Grid>
+</ContentView>

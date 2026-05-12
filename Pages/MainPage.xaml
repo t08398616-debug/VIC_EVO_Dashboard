@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:VIC_EVO_Dashboard.Pages.Components"
+             x:Class="VIC_EVO_Dashboard.MainPage"
+             BackgroundColor="{StaticResource Gray200}"
+             Title="VIC BOARD">
+
+    <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*,*" Margin="5" Padding="5">
+
+        <Grid ColumnDefinitions="*, Auto, *" BackgroundColor="Aqua" Padding="10" ColumnSpacing="20" Grid.Column="0" Grid.Row="0">
+
+            <components:Meters Title="DEMANDA DE FLUJO" Value="100" Unit="KWTh" Grid.Column="0" WidthRequest="350"/>
+            <components:Meters Title="POSICION DE LA VALVULA" Value="75" Unit="%" Grid.Column="2" WidthRequest="350"/>
+        </Grid>
+
+        <Grid ColumnDefinitions="*,Auto,*,*" RowDefinitions="*, *" Grid.Column="0" Grid.Row="1" BackgroundColor="DarkOrange">
+
+            <components:Meters Title="P1 AGUAS ARRIBA" Value="45" Unit="BAR" Grid.Column="0" Grid.Row="0" HeightRequest="150"/>
+            <components:Meters Title="P2 AGUAS ARRIBA" Value="25" Unit="BAR" Grid.Column="0" Grid.Row="1" HeightRequest="150"/>
+            <Image Source="valve_evo.png" Grid.Column="1" Grid.RowSpan="2" HeightRequest="150" WidthRequest="150"/>
+            <components:Meters Title="P3 AGUAS ABAJO" Value="75" Unit="BAR" Grid.Column="2" Grid.Row="0" HeightRequest="150"/>
+            <components:Meters Title="P2 AGUAS ABAJO" Value="45" Unit="BAR" Grid.Column="2" Grid.Row="1" HeightRequest="150"/>
+            <Border Stroke="Black" StrokeShape="2" StrokeThickness="1" BackgroundColor="Red" Grid.Column="3" Grid.RowSpan="2" HeightRequest="150" WidthRequest="180" Padding="10" >
+                <Label Text="ALGORITMO DE FLUJO" FontFamily="Verdana" FontSize="16" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            </Border>
+
+        </Grid>
+
+        <HorizontalStackLayout Spacing="50" Grid.Column="0" Grid.Row="2" HorizontalOptions="Center">
+
+            <components:Meters Title="TEMPERATURA DEL COMBUSTIBLE °C/°F" Value="120" Unit="°C" WidthRequest="350"/>
+
+            <Image Source="logo.png" HeightRequest="250" WidthRequest="250"/>
+
+        </HorizontalStackLayout>
+
+        <Grid RowDefinitions="*,0.08*,Auto" BackgroundColor="Chocolate" Padding="5" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3">
+
+            <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" BackgroundColor="DarkRed" Padding="5" RowSpacing="10" Grid.Row="0">
+
+                <Label Text="CODIGOS DE ERROR" FontSize="16" FontFamily="Verdana" FontAttributes="Bold" Padding="5" HorizontalOptions="Center" Grid.Row="0"/>
+                <components:ErrorBox ErrorText="ERROR POSICION DE VALVULA" LedColor="Green" Grid.Row="1"/>
+                <components:ErrorBox ErrorText="PERDIDA DE DEMANDA DE FLUJO" LedColor="Green" Grid.Row="2"/>
+                <components:ErrorBox ErrorText="FALLA DE SENSOR PT1000" LedColor="Green" Grid.Row="3"/>
+                <components:ErrorBox ErrorText="P1 FUERA DE RANGO" LedColor="Green" Grid.Row="4"/>
+                <components:ErrorBox ErrorText="P2 FUERA DE RANGO" LedColor="Green" Grid.Row="5"/>
+                <components:ErrorBox ErrorText="P3 FUERA DE RANGO" LedColor="Green" Grid.Row="6"/>
+                <components:ErrorBox ErrorText="P4 FUERA DE RANGO" LedColor="Green" Grid.Row="7"/>
+                <components:ErrorBox ErrorText="ALARMA DE DIFERENCIA DE PRESION AGUAS ARRIBA" LedColor="Green" Grid.Row="8"/>
+                <components:ErrorBox ErrorText="ALARMA DE DIFERENCIA DE PRESION AGUAS ABAJO" LedColor="Green" Grid.Row="9"/>
+                <components:ErrorBox ErrorText="ERROR FATAL POR DIFERENCIA DE PRESION DE SENSOR AGUAS ARRIBA" LedColor="Green" Grid.Row="10"/>
+                <components:ErrorBox ErrorText="ERROR FATAL POR DIFERENCIA DE PRESION DE SENSOR AGUAS ABAJO" LedColor="Green" Grid.Row="11"/>
+
+            </Grid>
+
+            <VerticalStackLayout Grid.Row="2">
+
+                <Label Text="Unidad"/>
+                
+                <Border BackgroundColor="Honeydew" HeightRequest="50">
+                    <Picker x:Name="UnitPicker" Title="Selecciona uno"/>
+                </Border>
+
+                <Label Text="Idioma"/>
+                
+                <Border BackgroundColor="DarkGray" HeightRequest="50">
+                    <Picker x:Name="LanguagePicker" Title="Selecciona un idioma"/>
+                </Border>
+            </VerticalStackLayout>
+
+        </Grid>
+    </Grid>
+    
+</ContentPage>
