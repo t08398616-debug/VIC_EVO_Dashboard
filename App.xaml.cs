@@ -1,4 +1,5 @@
-﻿namespace VIC_EVO_Dashboard;
+﻿using System.Globalization;
+namespace VIC_EVO_Dashboard;
 
 public partial class App : Application
 {
@@ -6,6 +7,12 @@ public partial class App : Application
     {
         MainPage = new AppShell();
         InitializeComponent();
+
+        string savedCulture = Preferences.Get("SelectedCulture", "en");
+        var culture = new CultureInfo(savedCulture);
+
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
     }
 
     protected override Window CreateWindow(IActivationState activationState)

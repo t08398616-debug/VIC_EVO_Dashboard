@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="VIC_EVO_Dashboard.Pages.Components.Meters"
-             x:Name="MetersView">
-    
-    
-    
-    <Grid RowDefinitions="Auto, Auto" RowSpacing="5"
-      VerticalOptions="Center" Padding="8"
-      BackgroundColor="#353535">
+             xmlns:local="clr-namespace:VIC_EVO_Dashboard.Pages.Components"
+             x:Class="VIC_EVO_Dashboard.Pages.Components.Meters">
+
+    <Grid RowDefinitions="Auto, Auto" RowSpacing="5" VerticalOptions="Center" Padding="8" BackgroundColor="#353535">
 
         <Border Grid.Row="0" Stroke="Black" StrokeThickness="0.5" 
-            BackgroundColor="#7D7D7D" HeightRequest="50" StrokeShape="3">
+                BackgroundColor="#7D7D7D" HeightRequest="50" StrokeShape="5">
 
-            <Label Text="{Binding Title, Source={x:Reference MetersView}}" FontSize="12" 
-               TextColor="#D9FFFFFF" FontAttributes="Bold" 
-               FontFamily="Verdana" HorizontalTextAlignment="Center" 
-               VerticalTextAlignment="Center" LineBreakMode="NoWrap" />
+            <Label Text="{Binding Title, Source={RelativeSource AncestorType={x:Type local:Meters}}}" 
+                   FontSize="12" 
+                   TextColor="#D9FFFFFF" FontAttributes="Bold" 
+                   FontFamily="Verdana" HorizontalTextAlignment="Center" 
+                   VerticalTextAlignment="Center" LineBreakMode="NoWrap" />
         </Border>
 
         <Grid Grid.Row="1" ColumnDefinitions="*, *" ColumnSpacing="8">
             <Border Grid.Column="0" BackgroundColor="#7D7D7D"
-                Stroke="Black" StrokeThickness="0.5"
-                HeightRequest="50" StrokeShape="3">
-                <Label Text="{Binding Value, Source={x:Reference MetersView}}"
-                   FontSize="15" 
-                   TextColor="#D9FFFFFF" 
-                   FontAttributes="Bold"
-                   HorizontalTextAlignment="Center" 
-                   VerticalTextAlignment="Center"/>
+                    Stroke="Black" StrokeThickness="0.5"
+                    HeightRequest="50" StrokeShape="3">
+                <Label Text="{Binding Value, Source={RelativeSource AncestorType={x:Type local:Meters}}}"
+                       FontSize="15" 
+                       TextColor="#D9FFFFFF" 
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center"/>
             </Border>
 
             <Border Grid.Column="1" BackgroundColor="#7D7D7D" 
-                Stroke="Black" StrokeThickness="0.5"
-                HeightRequest="50" StrokeShape="3">
-                <Label Text="{Binding Unit, Source={x:Reference MetersView}}" FontSize="12" 
-                   TextColor="#D9FFFFFF" FontAttributes="Bold"
-                   FontFamily="Verdana" HorizontalTextAlignment="Center" 
-                   VerticalTextAlignment="Center"/>
+                    Stroke="Black" StrokeThickness="0.5"
+                    HeightRequest="50" StrokeShape="3">
+                <Label Text="{Binding Unit, Source={RelativeSource AncestorType={x:Type local:Meters}}}" 
+                       FontSize="12" 
+                       TextColor="#D9FFFFFF" FontAttributes="Bold"
+                       FontFamily="Verdana" HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center"/>
             </Border>
         </Grid>
     </Grid>

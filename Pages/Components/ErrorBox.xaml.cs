@@ -21,7 +21,7 @@ public partial class ErrorBox : ContentView
     }
 
     public ErrorBox()
-	{
-		InitializeComponent();
-	}
+    {
+        InitializeComponent();
+    }
 }
