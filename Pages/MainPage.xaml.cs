@@ -15,7 +15,7 @@ public partial class MainPage : ContentPage
         BindingContext = _viewModel;
 
         LanguagePicker.ItemsSource = new List<string> { "English", "Español" };
-        UnitPicker.ItemsSource = new List<string> { "SI (BAR)", "US (PSI)" };
+        UnitPicker.ItemsSource = new List<string> { "SI (BAR)", "IMPERIAL (PSI)" };
 
         LanguagePicker.SelectedIndex = Preferences.Get("SelectedLanguageIndex", 0);
         UnitPicker.SelectedIndex = Preferences.Get("SelectedUnitIndex", 0);
@@ -56,11 +56,14 @@ public partial class MainPage : ContentPage
     {
         if (isInitializing || UnitPicker.SelectedIndex == -1) return;
 
-        bool isSi = UnitPicker.SelectedIndex == 0;
-        _viewModel.PressureUnit = isSi ? "BAR" : "PSI";
-        _viewModel.TempUnit = isSi ? "°C" : "°F";
+        bool isInternationalSystem = UnitPicker.SelectedIndex == 0;
+        _viewModel.PressureUnit = isInternationalSystem ? "BAR" : "PSI";
+        _viewModel.TempUnit = isInternationalSystem ? "°C" : "°F";
 
         Preferences.Set("SelectedUnitIndex", UnitPicker.SelectedIndex);
         Preferences.Set("SelectedPressureUnit", _viewModel.PressureUnit);
+
+        if (isInternationalSystem) _viewModel.ChangeUnit("SI");
+        if (!isInternationalSystem) _viewModel.ChangeUnit("IMPERIAL");
     }
 }

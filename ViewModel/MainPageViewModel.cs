@@ -115,7 +115,7 @@ public partial class MainPageViewModel : ObservableObject
                     {
                         try
                         {
-                            client.Connect(new IPEndPoint(IPAddress.Parse(ip), port));
+                            client.Connect(IPAddress.Parse(ip), ModbusEndianness.BigEndian);
                         }
                         catch (Exception ex)
                         {
@@ -125,7 +125,7 @@ public partial class MainPageViewModel : ObservableObject
                         }
                     }
 
-                    var regs = await client.ReadHoldingRegistersAsync<short>(0, 0, 15);
+                    var regs = await client.ReadHoldingRegistersAsync<ushort>(0, 0, 15);
                     var arr = regs.ToArray();
 
                     MainThread.BeginInvokeOnMainThread(() =>
@@ -141,15 +141,18 @@ public partial class MainPageViewModel : ObservableObject
 
                         if (FuelTempValueSign != 0)
                         {
-                            fuelTempValue = $"{FuelTempValue}";
+                            FuelTempValue = $"-{FuelTempValue}";
                         }
 
+                        Debug.WriteLine(FuelTempValueSign);
+                        Debug.WriteLine(fuelTempValue);
 
-                        if (arr.Length > 15)
+
+                        if (arr.Length > 13)
                         {
-                            ushort errorWord = (ushort)arr[15];
+                            ushort errorWord = (ushort)arr[13];
 
-                            Color GetLedForBit(int bitIndex) => ((errorWord & (1 << bitIndex)) != 0) ? Colors.Green : Colors.Gray;
+                            Color GetLedForBit(int bitIndex) => ((errorWord & (1 << bitIndex)) != 0) ? Colors.Green : Colors.Red;
 
                             Error1Led = GetLedForBit(8);
                             Error2Led = GetLedForBit(10);
@@ -162,7 +165,13 @@ public partial class MainPageViewModel : ObservableObject
                             Error9Led = GetLedForBit(11);
                             Error10Led = GetLedForBit(13);
                             Error11Led = GetLedForBit(14);
+
+                            Debug.WriteLine(errorWord);
+                            Debug.WriteLine($"LEDs: {Error1Led}, {Error2Led}, {Error3Led}, {Error4Led}, {Error5Led}, {Error6Led}, {Error7Led}, {Error8Led}, {Error9Led}, {Error10Led}, {Error11Led}");
                         }
+
+                        ChangeUnit(Preferences.Get("SelectedUnitIndex", 0) == 0 ? "SI" : "IMPERIAL");
+
                     });
                 }
                 catch (OperationCanceledException) when (token.IsCancellationRequested)
@@ -190,5 +199,33 @@ public partial class MainPageViewModel : ObservableObject
         }
         catch { }
         _modbusCts = null;
+    }
+
+    public void ChangeUnit(string unit)
+    {
+        //Position valve in percentage
+        PositionValue = (float.Parse(PositionValue) / 100).ToString("N2");
+
+        if (unit == "SI")
+        {
+            //SI Units (BAR, °C)
+            P1Value = (float.Parse(P1Value) / 1000).ToString("N2");
+            P2Value = (float.Parse(P2Value) / 1000).ToString("N2");
+            P3Value = (float.Parse(P3Value) / 1000).ToString("N2");
+            P4Value = (float.Parse(P4Value) / 1000).ToString("N2");
+
+            FuelTempValue = (float.Parse(FuelTempValue) / 100).ToString();
+
+        }
+
+        if (unit == "IMPERIAL")
+        {
+            //Imperial Units (PSI, °F)
+            P1Value = ((float.Parse(P1Value) / 1000) * 14.5038).ToString("N2");
+            P2Value = ((float.Parse(P2Value) / 1000) * 14.5038).ToString("N2");
+            P3Value = ((float.Parse(P3Value) / 1000) * 14.5038).ToString("N2");
+            P4Value = ((float.Parse(P4Value) / 1000) * 14.5038).ToString("N2");
+            FuelTempValue = ((float.Parse(FuelTempValue) / 100) * 1.8 + 32).ToString("N2");
+        }
     }
 }
